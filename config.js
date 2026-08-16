@@ -13,7 +13,7 @@
 //   按功能编号填写；某个功能暂时没有链接就留空 ''，对应的页面会显示「找老师要链接」。
 
 window.COURSE_CONFIG = {
-    unlockedModule: 2,
+    unlockedModule: 1,
 
     demoLinks: {
         1: '',
