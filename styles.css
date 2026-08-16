@@ -1,0 +1,792 @@
+/* =========================================================
+   网页课件风格模板 · styles.css
+   ---------------------------------------------------------
+   使用步骤：
+   1. 把「课件模板」文件夹复制成你的新课件目录
+   2. 总览页用 index.html 的骨架，内容页用 module.html 的骨架
+   3. 换整套配色：改下方 :root 里的主题色变量即可
+   4. 内容页换模块专属色：在该页 <head> 中覆盖 --page-accent 和
+      --page-soft 两个变量，无需再写其他样式
+
+   常用模块色示例（内容页 <style> 里覆盖）：
+   :root { --page-accent:#27ae60; --page-soft:#f0f9ff; }  绿色
+   :root { --page-accent:#e74c3c; --page-soft:#fff5f5; }  红色
+   :root { --page-accent:#8e44ad; --page-soft:#f9f5ff; }  紫色
+   :root { --page-accent:#F3A21C; --page-soft:#fffbf0; }  橙色
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* === 主题色（换一套课件只改这里） === */
+    --primary: #F3A21C;     /* 主色：大标题 / 老师注记 / 返回顶部 */
+    --secondary: #72ACC8;   /* 辅色：返回导航 / 节点树子项 */
+    --accent: #667eea;      /* 强调色：卡片左边线 / 代码块 */
+    --bg: #fafafa;
+    --card-bg: #ffffff;
+    --text: #333333;
+    --text-muted: #666666;
+    --border: #e0e0e0;
+
+    /* === 内容页模块色（在该页 <head> 里覆盖） === */
+    --page-accent: #667eea;  /* 本页强调色：步骤编号 / 步骤卡片左边线 */
+    --page-soft: #f5f7ff;    /* 本页流程图浅色底 */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* === 布局容器 === */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.container-wide {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* === 返回导航 === */
+.back-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--secondary);
+    text-decoration: none;
+    font-size: 0.95em;
+    font-weight: 500;
+    margin-bottom: 30px;
+    padding: 8px 16px;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.back-nav:hover {
+    background: var(--secondary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(114,172,200,0.4);
+}
+
+/* === 内容页页头 === */
+.page-header {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+}
+
+.page-header .module-tag {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.page-header h1 {
+    font-size: 2em;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    color: var(--text-muted);
+    font-size: 1.1em;
+}
+
+/* === 内容卡片 === */
+.content-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border-left: 4px solid var(--accent);
+    transition: all 0.3s ease;
+}
+
+.content-card:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.content-card.features-card { border-left-color: var(--primary); }
+.content-card.tree-card    { border-left-color: var(--secondary); }
+.content-card.logic-card   { border-left-color: var(--accent); }
+
+.section-title {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tree-card .section-title  { color: var(--secondary); }
+.logic-card .section-title { color: var(--accent); }
+
+/* === 步骤卡片（内容页） ===
+   颜色跟随本页 --page-accent 变量 */
+.step-card {
+    border-left-color: var(--page-accent);
+}
+
+.step-card .section-title {
+    color: var(--page-accent);
+}
+
+.step-card .code-block {
+    border-left-color: var(--page-accent);
+}
+
+.step-num {
+    display: inline-block;
+    background: var(--page-accent);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    margin-right: 8px;
+}
+
+/* === 步骤操作说明列表 ===
+   只作用于步骤卡片里的有序列表，避免影响卡片内的检查清单等 */
+.step-card ol {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    counter-reset: step-item;
+}
+
+.step-card ol li {
+    counter-increment: step-item;
+    position: relative;
+    padding: 6px 0 6px 28px;
+    font-size: 0.95em;
+    line-height: 1.55;
+}
+
+.step-card ol li::before {
+    content: counter(step-item) ".";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    color: var(--page-accent);
+    font-weight: 600;
+    font-size: 0.9em;
+    width: 22px;
+    padding-right: 4px;
+    text-align: right;
+    box-sizing: border-box;
+}
+
+/* === 步骤插图尺寸统一 ===
+   通过内联 style 精确控制每张图宽度；
+   以下 class 只设高度自动与最大宽度保护 */
+.fig-img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin: 14px 0 0 28px;
+    display: block;
+}
+
+.fig-img + .img-caption {
+    margin-top: 6px;
+}
+
+/* 大图（UI/编辑器等接近全屏的截图）：不缩进、整体居中 */
+.fig-img.fig-wide {
+    margin-left: auto;
+    margin-right: auto;
+}
+.fig-img.fig-wide + .img-caption {
+    text-align: center;
+    margin-left: 0;
+}
+
+/* === 列表 === */
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 0.95em;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.feature-list li::before {
+    content: '▸';
+    color: var(--primary);
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.feature-list li strong {
+    color: var(--text);
+}
+
+/* === 节点树 === */
+.node-tree {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.92em;
+    background: #f5f7ff;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e8ecf4;
+}
+
+.node-tree .root {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.node-tree .child {
+    color: var(--secondary);
+    padding-left: 24px;
+    display: block;
+    margin-top: 4px;
+}
+
+.node-tree .note {
+    color: var(--text-muted);
+    font-style: italic;
+    padding-left: 24px;
+}
+
+/* === 代码块 === */
+.code-block {
+    background: #f5f5f5;
+    border-radius: 10px;
+    border-left: 4px solid var(--accent);
+    padding: 20px;
+    overflow-x: auto;
+    margin-top: 12px;
+}
+
+.code-block pre {
+    margin: 0;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.88em;
+    line-height: 1.7;
+    color: #333;
+    white-space: pre;
+}
+
+/* === 流程图（内容页） === */
+.flow-box {
+    background: var(--page-soft);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: monospace;
+    line-height: 2;
+    white-space: pre-wrap;
+}
+
+/* === 提醒框（可选） === */
+.warn-box {
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: #fdf2f8;
+    border-radius: 8px;
+    border-left: 4px solid #d946ef;
+    color: #701a75;
+    font-size: 0.9em;
+}
+
+/* === 说明文字（可选） === */
+.hint {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    margin-bottom: 12px;
+}
+
+.note-text {
+    margin-top: 14px;
+    color: var(--text-muted);
+    font-size: 0.9em;
+}
+
+/* === 老师注记 === */
+.teacher-note {
+    background: #fffbf0;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+    border-left: 4px solid var(--primary);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.teacher-note .section-title {
+    color: var(--primary);
+}
+
+.teacher-note .feature-list li {
+    display: block;
+    padding: 14px 18px 14px 34px;
+    line-height: 1.7;
+    position: relative;
+}
+
+.teacher-note .feature-list li::before {
+    position: absolute;
+    left: 14px;
+    top: 16px;
+}
+
+.teacher-note .feature-list li strong {
+    display: inline-block;
+    margin-bottom: 2px;
+}
+
+/* === 总览页页头 === */
+.index-header {
+    background: white;
+    border-radius: 20px;
+    padding: 50px 40px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+}
+
+.index-header h1 {
+    font-size: 2.4em;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.index-header .subtitle {
+    color: var(--text-muted);
+    font-size: 1.15em;
+}
+
+/* === 模块卡片网格 === */
+.module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* 固定三列（模块数较少时用） */
+.module-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.module-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-top: 5px solid var(--accent);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 自动配色（不需要可删除；单独配色的卡片用行内样式覆盖） */
+.module-card:nth-child(1) { border-top-color: #e74c3c; }
+.module-card:nth-child(2) { border-top-color: #27ae60; }
+.module-card:nth-child(3) { border-top-color: #667eea; }
+.module-card:nth-child(4) { border-top-color: #F3A21C; }
+.module-card:nth-child(5) { border-top-color: #72ACC8; }
+.module-card:nth-child(6) { border-top-color: #e74c3c; }
+.module-card:nth-child(7) { border-top-color: #27ae60; }
+.module-card:nth-child(8) { border-top-color: #667eea; }
+.module-card:nth-child(9) { border-top-color: #F3A21C; }
+
+.module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.module-card .module-num {
+    font-size: 0.8em;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.module-card h2 {
+    font-size: 1.15em;
+    color: var(--text);
+    line-height: 1.3;
+}
+
+.module-card p {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.module-card .arrow {
+    color: var(--secondary);
+    font-size: 1.2em;
+    font-weight: bold;
+    align-self: flex-end;
+    margin-top: auto;
+}
+
+/* === 总览页注记卡片 === */
+.note-card {
+    background: #fffbf0;
+    border-radius: 15px;
+    padding: 25px 30px;
+    border-left: 5px solid var(--primary);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.note-card h2 {
+    font-size: 1.2em;
+    color: var(--primary);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.note-card p {
+    color: var(--text-muted);
+    font-size: 0.95em;
+    line-height: 1.6;
+}
+
+.note-card ul {
+    margin-top: 12px;
+    padding-left: 20px;
+}
+
+.note-card li {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    margin-bottom: 6px;
+}
+
+/* === 内联代码 === */
+code {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9em;
+    background: #f3f4f6;
+    color: #d73a49;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* === 步骤插图 === */
+.fig-img {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin: 14px 0 0 28px;
+    display: block;
+}
+
+.fig-img + .img-caption {
+    margin-top: 6px;
+}
+
+/* === 图片说明 === */
+.img-caption {
+    text-align: left;
+    margin-left: 30px;
+    font-size: 0.82em;
+    color: var(--text-muted);
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* === 表格 === */
+.tbl-wrap {
+    overflow-x: auto;
+    margin-top: 12px;
+}
+
+table.tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+    background: #fff;
+}
+
+.tbl th,
+.tbl td {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.tbl th {
+    background: var(--page-soft);
+    font-weight: 600;
+}
+
+.tbl tbody tr:nth-child(even) td {
+    background: #fafafa;
+}
+
+/* === 检查清单 === */
+.check-list {
+    list-style: none;
+    padding: 0;
+}
+
+.check-list li {
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 0.95em;
+}
+
+.check-list li::before {
+    content: '☐';
+    color: var(--page-accent);
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* === 易错点列表（主项 + 子检查点嵌套） === */
+.warn-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.warn-list > li {
+    position: relative;
+    padding: 11px 0 11px 30px;
+    font-size: 0.95em;
+    line-height: 1.65;
+    border-bottom: 1px dashed var(--border);
+}
+
+.warn-list > li:last-child {
+    border-bottom: none;
+}
+
+.warn-list > li::before {
+    content: '⚠';
+    position: absolute;
+    left: 2px;
+    top: 11px;
+    font-size: 0.95em;
+    color: #e67e22;
+}
+
+.warn-list li strong {
+    color: var(--text);
+    font-weight: 700;
+}
+
+.warn-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+}
+
+.warn-list ul li {
+    position: relative;
+    padding: 4px 0 4px 20px;
+    font-size: 0.93em;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+.warn-list ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 2px;
+    top: 4px;
+    color: var(--page-accent);
+    font-weight: bold;
+}
+
+/* === 扩展挑战列表（编号圆标卡片 + 提示嵌套） === */
+.challenge-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: challenge;
+}
+
+.challenge-list > li {
+    position: relative;
+    padding: 12px 16px 12px 50px;
+    margin-bottom: 10px;
+    background: var(--page-soft);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.95em;
+    line-height: 1.6;
+}
+
+.challenge-list > li::before {
+    counter-increment: challenge;
+    content: counter(challenge);
+    position: absolute;
+    left: 13px;
+    top: 13px;
+    width: 24px;
+    height: 24px;
+    background: var(--page-accent);
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 0.85em;
+    font-weight: 700;
+}
+
+.challenge-list li strong {
+    color: var(--text);
+    font-weight: 700;
+}
+
+.challenge-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+}
+
+.challenge-list ul li {
+    position: relative;
+    padding: 4px 0 4px 20px;
+    font-size: 0.93em;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+.challenge-list ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 2px;
+    top: 4px;
+    color: var(--page-accent);
+    font-weight: bold;
+}
+
+/* === 返回顶部 === */
+.back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-to-top:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    background: #e09518;
+}
+
+/* === 入场动画 === */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.index-header { animation: fadeInUp 0.5s ease forwards; }
+.module-card  { animation: fadeInUp 0.5s ease forwards; }
+.note-card    { animation: fadeInUp 0.5s ease forwards; animation-delay: 0.6s; }
+
+.module-card:nth-child(1) { animation-delay: 0.1s; }
+.module-card:nth-child(2) { animation-delay: 0.2s; }
+.module-card:nth-child(3) { animation-delay: 0.3s; }
+.module-card:nth-child(4) { animation-delay: 0.4s; }
+.module-card:nth-child(5) { animation-delay: 0.5s; }
+.module-card:nth-child(6) { animation-delay: 0.6s; }
+.module-card:nth-child(7) { animation-delay: 0.7s; }
+.module-card:nth-child(8) { animation-delay: 0.8s; }
+.module-card:nth-child(9) { animation-delay: 0.9s; }
+
+/* === 响应式 === */
+@media (max-width: 768px) {
+    body {
+        padding: 12px;
+    }
+
+    .page-header {
+        padding: 30px 20px;
+    }
+
+    .page-header h1 {
+        font-size: 1.6em;
+    }
+
+    .content-card {
+        padding: 20px;
+    }
+
+    .index-header {
+        padding: 35px 20px;
+    }
+
+    .index-header h1 {
+        font-size: 1.8em;
+    }
+
+    .module-grid,
+    .module-grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .code-block {
+        font-size: 0.82em;
+        padding: 14px;
+    }
+}

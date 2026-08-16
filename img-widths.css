@@ -1,0 +1,25 @@
+/* 图片宽度全局设置：由 preview.html 的「导出」按钮自动生成。
+   导出后下载此文件并覆盖到网页手册目录，所有学生端即可生效。
+   不要手动编辑此文件，改图请用 preview.html。 */
+/* 图片宽度全局设置：由 preview.html 导出自动生成 */
+img[src="images/func01-step1-block.png"] { width: 705px !important; }
+img[src="images/func01-step2-block.png"] { width: 655px !important; }
+img[src="images/func01-step3-block.png"] { width: 535px !important; }
+img[src="images/func01-step4-block.png"] { width: 520px !important; }
+img[src="images/func01-step5-run.png"] { width: 360px !important; }
+img[src="images/func01-step6-ui.png"] { width: 850px !important; }
+img[src="images/func02-step1-block.png"] { width: 550px !important; }
+img[src="images/func02-step1-editor.png"] { width: 800px !important; }
+img[src="images/func02-step2-editor.png"] { width: 800px !important; }
+img[src="images/func02-step3-block.png"] { width: 710px !important; }
+img[src="images/func02-step4-block.png"] { width: 530px !important; }
+img[src="images/func02-step5-run.gif"] { width: 320px !important; }
+img[src="images/func03-step2-block.png"] { width: 450px !important; }
+img[src="images/func03-step3-block.png"] { width: 450px !important; }
+img[src="images/func03-step4-1-block.png"] { width: 190px !important; }
+img[src="images/func03-step4-2-block.png"] { width: 340px !important; }
+img[src="images/func03-step4-3-block.png"] { width: 230px !important; }
+img[src="images/func03-step5-1-block.png"] { width: 200px !important; }
+img[src="images/func03-step5-2-block.png"] { width: 220px !important; }
+img[src="images/func03-step5-3-block.png"] { width: 340px !important; }
+img[src="images/func03-step7-run.gif"] { width: 320px !important; }

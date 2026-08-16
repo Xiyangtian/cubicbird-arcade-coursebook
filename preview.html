@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片尺寸调整 · 仅老师使用</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+body { background: #f7f5f2; }
+.tweak-header { text-align: center; margin: 24px 0 8px; }
+.tweak-header h1 { font-size: 1.6em; margin: 0 0 8px; }
+.tweak-header p { color: #666; margin: 0 0 16px; font-size: 0.95em; }
+.tweak-toolbar { text-align: center; margin-bottom: 20px; }
+.tweak-btn {
+    display: inline-block; padding: 8px 18px; border-radius: 8px;
+    border: none; cursor: pointer; font-size: 0.95em;
+    background: #e8e5e0; color: #444;
+}
+.tweak-btn:hover { background: #ddd; }
+.tweak-card {
+    background: #fff; border: 1px solid #eee; border-radius: 12px;
+    padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.tweak-card .fig-wrap { text-align: center; overflow-x: auto; }
+.tweak-card img { display: block; margin: 0 auto; }
+.tweak-card .ctrl {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    margin-top: 12px; padding-top: 12px; border-top: 1px dashed #eee;
+}
+.tweak-card .ctrl input[type="range"] { flex: 1; min-width: 200px; }
+.tweak-card .ctrl .w-val { font-weight: 700; color: #e74c3c; min-width: 48px; }
+.tweak-card .meta { font-size: 0.82em; color: #999; margin-left: auto; }
+.tweak-card .meta b { color: #666; }
+</style>
+</head>
+<body>
+<div class="container" style="max-width: 960px;">
+
+<div class="tweak-header">
+<h1>🎨 图片尺寸调整（仅老师使用）</h1>
+<p>拖动滑块调整每张图片的显示宽度，调整结果<b>实时保存到本浏览器</b>，打开功能页面即可看到效果。</p>
+</div>
+
+<div class="tweak-toolbar">
+<button class="tweak-btn" id="resetAll">↺ 恢复全部默认宽度</button>
+<button class="tweak-btn" id="exportCss">⬇ 导出并下载 img-widths.css（覆盖到网页手册目录，学生端生效）</button>
+</div>
+
+<div id="list"></div>
+
+</div>
+
+<script>
+// ===== 全部图片清单 =====
+// 新增功能页图片后，请把 { src, w, page, note } 加到这个数组里
+//   src  : 图片相对路径（必须和功能页里 <img> 的 src 完全一致）
+//   w    : 功能页里的默认宽度（px）
+//   page : 所在功能
+//   note : 图片说明
+var IMAGES = [
+    { src: 'images/func01-step1-block.png', w: 720, page: '功能01', note: '创建玩家精灵积木' },
+    { src: 'images/func01-step2-block.png', w: 720, page: '功能01', note: '设置精灵位置积木' },
+    { src: 'images/func01-step3-block.png', w: 680, page: '功能01', note: '控制器移动积木' },
+    { src: 'images/func01-step4-block.png', w: 620, page: '功能01', note: '设置背景颜色积木' },
+    { src: 'images/func01-step5-run.png',   w: 360, page: '功能01', note: '运行效果' },
+    { src: 'images/func01-step6-ui.png',    w: 900, page: '功能01', note: '分享游戏操作' },
+
+    { src: 'images/func02-step1-block.png',  w: 720, page: '功能02', note: '设置图块地图指令' },
+    { src: 'images/func02-step1-editor.png', w: 900, page: '功能02', note: '地图编辑器绘制' },
+    { src: 'images/func02-step2-editor.png', w: 900, page: '功能02', note: '设置墙壁碰撞' },
+    { src: 'images/func02-step3-block.png',  w: 720, page: '功能02', note: '放置角色到地图' },
+    { src: 'images/func02-step4-block.png',  w: 700, page: '功能02', note: '添加相机跟随' },
+    { src: 'images/func02-step5-run.gif',    w: 320, page: '功能02', note: '运行效果' },
+
+    { src: 'images/func03-step2-block.png',   w: 680, page: '功能03', note: '设置运动速度积木' },
+    { src: 'images/func03-step3-block.png',   w: 640, page: '功能03', note: '敌人碰墙反弹积木' },
+    { src: 'images/func03-step4-1-block.png', w: 420, page: '功能03', note: '当游戏更新时积木' },
+    { src: 'images/func03-step4-2-block.png', w: 520, page: '功能03', note: '精灵说积木' },
+    { src: 'images/func03-step4-3-block.png', w: 420, page: '功能03', note: '精灵的 vx' },
+    { src: 'images/func03-step5-1-block.png', w: 420, page: '功能03', note: '如果那么积木' },
+    { src: 'images/func03-step5-2-block.png', w: 400, page: '功能03', note: '大于比较积木' },
+    { src: 'images/func03-step5-3-block.png', w: 520, page: '功能03', note: '设置图像积木' },
+    { src: 'images/func03-step7-run.gif',     w: 320, page: '功能03', note: '运行效果' }
+];
+
+var MIN = 150, MAX = 1100, STEP = 5;
+var KEY = 'arcade-img-widths';
+
+function loadMap() {
+    try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; }
+}
+function saveMap(map) {
+    localStorage.setItem(KEY, JSON.stringify(map));
+}
+
+var map = loadMap();
+
+function render() {
+    var list = document.getElementById('list');
+    list.innerHTML = '';
+    IMAGES.forEach(function (item, i) {
+        var cur = (map[item.src] !== undefined) ? map[item.src] : item.w;
+
+        var card = document.createElement('div');
+        card.className = 'tweak-card';
+
+        var wrap = document.createElement('div');
+        wrap.className = 'fig-wrap';
+        var img = document.createElement('img');
+        img.src = item.src;
+        img.alt = item.note;
+        img.style.setProperty('width', cur + 'px', 'important');
+        img.style.maxWidth = '100%';
+        wrap.appendChild(img);
+
+        var ctrl = document.createElement('div');
+        ctrl.className = 'ctrl';
+
+        var range = document.createElement('input');
+        range.type = 'range';
+        range.min = MIN; range.max = MAX; range.step = STEP;
+        range.value = cur;
+        range.addEventListener('input', function () {
+            map[item.src] = parseInt(range.value, 10);
+            saveMap(map);
+            img.style.setProperty('width', map[item.src] + 'px', 'important');
+            val.textContent = map[item.src] + 'px';
+        });
+
+        var val = document.createElement('span');
+        val.className = 'w-val';
+        val.textContent = cur + 'px';
+
+        var btn = document.createElement('button');
+        btn.className = 'tweak-btn';
+        btn.textContent = '默认';
+        btn.title = '恢复 ' + item.w + 'px';
+        btn.addEventListener('click', function () {
+            delete map[item.src];
+            saveMap(map);
+            img.style.setProperty('width', item.w + 'px', 'important');
+            range.value = item.w;
+            val.textContent = item.w + 'px';
+        });
+
+        var meta = document.createElement('span');
+        meta.className = 'meta';
+        meta.innerHTML = '<b>' + item.page + '</b> · ' + item.note + ' · 默认 ' + item.w + 'px';
+
+        ctrl.appendChild(range);
+        ctrl.appendChild(val);
+        ctrl.appendChild(btn);
+        ctrl.appendChild(meta);
+        card.appendChild(wrap);
+        card.appendChild(ctrl);
+        list.appendChild(card);
+    });
+}
+
+document.getElementById('resetAll').addEventListener('click', function () {
+    localStorage.removeItem(KEY);
+    map = {};
+    render();
+});
+
+document.getElementById('exportCss').addEventListener('click', function () {
+    var lines = ['/* 图片宽度全局设置：由 preview.html 导出自动生成 */'];
+    IMAGES.forEach(function (item) {
+        var cur = (map[item.src] !== undefined) ? map[item.src] : item.w;
+        lines.push('img[src="' + item.src + '"] { width: ' + cur + 'px !important; }');
+    });
+    var blob = new Blob([lines.join('\n')], { type: 'text/css' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'img-widths.css';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+});
+
+render();
+</script>
+</body>
+</html>

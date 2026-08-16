@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MakeCode Arcade 课程 · 功能手册</title>
+<link rel="stylesheet" href="styles.css">
+<script src="config.js"></script>
+</head>
+<body>
+<div class="container">
+
+<!-- 页头 -->
+<div class="index-header">
+<h1>🎮 MakeCode Arcade 功能手册</h1>
+<p class="subtitle">从零开始，用积木一步步做出你自己的游戏</p>
+</div>
+
+<!-- 功能概览 -->
+<div class="content-card features-card">
+<div class="section-title">📋 功能概览</div>
+<ul class="feature-list">
+<li data-module="1"><strong>功能 01</strong> 创建角色、用方向键控制移动、为游戏换上背景色</li>
+<li data-module="2"><strong>功能 02</strong> 用地图编辑器画场景，让墙壁挡住角色，镜头跟随移动</li>
+<li data-module="3"><strong>功能 03</strong> 让敌人自动巡逻、碰墙反弹，还会跟着方向换朝向</li>
+</ul>
+</div>
+
+<!-- 功能入口卡片
+     需要新增功能时：复制下面一张 <a> 卡片，改链接、标题和描述即可。
+     卡片会自动按顺序配色（第 4 张为橙色、第 5 张为蓝色、第 6 张为红色……） -->
+<div class="module-grid module-grid-3">
+<a href="module-01.html" class="module-card" data-module="1">
+<div class="module-num">功能 01</div>
+<h2>俯视角角色移动</h2>
+<p>创建玩家精灵，用键盘方向键控制它在屏幕上走动，并设置背景颜色。</p>
+<div class="arrow">→</div>
+</a>
+<a href="module-02.html" class="module-card" data-module="2">
+<div class="module-num">功能 02</div>
+<h2>地图与墙壁碰撞</h2>
+<p>用地图编辑器绘制场景，把图块变成真正的墙，让相机跟随角色移动。</p>
+<div class="arrow">→</div>
+</a>
+<a href="module-03.html" class="module-card" data-module="3">
+<div class="module-num">功能 03</div>
+<h2>敌人巡逻</h2>
+<p>给敌人设置速度让它自己巡逻，撞墙反弹，还能根据方向改变朝向。</p>
+<div class="arrow">→</div>
+</a>
+</div>
+
+<!-- 使用说明 -->
+<div class="note-card">
+<h2>📌 使用说明</h2>
+<p>每个功能建议按顺序完成，后面的功能会用到前面功能做的项目。完成一个功能后，记得点击编辑器右上角的「分享」把链接保存下来，下一个功能直接用「编辑」或「复制」打开自己的项目继续做。</p>
+</div>
+
+</div>
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+</body>
+</html>

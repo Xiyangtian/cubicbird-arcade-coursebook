@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>功能 01：俯视角角色移动</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="img-widths.css">
+<script src="config.js"></script>
+<script src="img-tweak.js"></script>
+<style>
+/* 本页模块色 */
+:root { --page-accent: #e74c3c; --page-soft: #fff5f5; }
+</style>
+</head>
+<body data-module="1">
+<div class="container">
+<a href="index.html" class="back-nav">← 返回总览</a>
+
+<!-- 页头 -->
+<div class="page-header">
+<div class="module-tag">功能 01</div>
+<h1>俯视角角色移动</h1>
+<p>创建你的第一个角色，用方向键控制它自由行走</p>
+</div>
+
+<!-- 本节目标 -->
+<div class="content-card features-card">
+<div class="section-title">🎯 本节目标</div>
+<ul class="feature-list">
+<li>在 MakeCode Arcade 中创建一个新项目</li>
+<li>创建并编辑一个精灵（Sprite）</li>
+<li>设置精灵的初始位置</li>
+<li>使用控制器让精灵上下左右移动</li>
+<li>设置场景背景颜色</li>
+</ul>
+</div>
+
+<!-- 课前准备 -->
+<div class="content-card">
+<div class="section-title">✏️ 课前准备</div>
+<ul class="feature-list">
+<li>打开浏览器，进入 <a href="https://arcade.makecode.com/" target="_blank" rel="noopener">MakeCode Arcade 编辑器</a></li>
+<li>点击 <strong>「新建项目」</strong>，给项目起个名字，例如：<code>功能01-角色移动</code></li>
+</ul>
+</div>
+
+<!-- 步骤 1 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 1</span>创建玩家精灵</div>
+<p class="hint">在场景中创建一个玩家角色。</p>
+<ol>
+<li>在左侧积木区找到 <strong>精灵</strong> 指令集</li>
+<li>拖动积木 <code>精灵 → 创建 → 将 [变量名] 设为精灵 [图像] 类型 [类型]</code> 到代码区</li>
+<li>给这个精灵起一个变量名，例如 <code>蜗牛</code></li>
+<li>点击精灵图像，进入<strong>精灵图像编辑器</strong></li>
+<li>可以选择 <strong>编辑器</strong>、<strong>图库</strong>、<strong>我的资产</strong>，分别可以自己画一个图像、选择图库里的图像、选择作品中有的图像</li>
+<li>将精灵种类设为 <strong>Player（玩家）</strong>，也可以自己添加新的类型</li>
+</ol>
+<img class="fig-img" style="width: 720px;" src="images/func01-step1-block.png" alt="创建玩家精灵积木">
+<div class="img-caption">图 1-1：创建玩家精灵积木</div>
+<p class="note-text">💡 也可以选择图库里的图像后，再进行个性化修改。</p>
+</div>
+
+<!-- 步骤 2 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 2</span>设置精灵位置（x/y 坐标）</div>
+<p class="hint">用 x/y 坐标让角色出现在屏幕左上角附近。</p>
+<ol>
+<li>在左侧积木区找到 <strong>精灵</strong> 指令集</li>
+<li>拖动积木 <code>精灵 → 物理 → 设置 [mySprite] 的位置为 x y</code> 到代码区</li>
+<li>把它放到 <code>创建精灵</code> 积木下面</li>
+<li>把 <code>mySprite</code> 改成你自己创建的精灵变量名，例如 <code>蜗牛</code></li>
+<li>将 x 设为 <code>20</code>，y 设为 <code>20</code></li>
+</ol>
+<img class="fig-img" style="width: 720px;" src="images/func01-step2-block.png" alt="设置精灵位置积木">
+<div class="img-caption">图 1-2：设置精灵位置积木</div>
+<p class="note-text">💡 这里设置的是精灵的 <strong>x/y 像素坐标</strong>，屏幕左上角是 <code>(0, 0)</code>，右下角是 <code>(160, 120)</code>。如果没有创建这个精灵就设置它的位置，会报错哦～</p>
+</div>
+
+<!-- 步骤 3 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 3</span>控制器移动</div>
+<p class="hint">按键盘方向键，角色可以上下左右移动。</p>
+<ol>
+<li>在左侧积木区找到 <strong>控制器</strong> 指令集</li>
+<li>拖动积木 <code>控制器 → 单人游戏 → 使用按键移动 [mySprite]</code> 到代码区</li>
+<li>把它放到 <code>设置位置</code> 积木下面</li>
+<li>把 <code>mySprite</code> 改成你自己创建的精灵变量名，例如 <code>蜗牛</code></li>
+<li>点击积木上的 <strong>+</strong>，展开后会多出 <code>vx</code> 和 <code>vy</code> 两个参数</li>
+<li><code>vx</code> 和 <code>vy</code> 默认就是 <code>100</code>，可以试试改大一点或改小一点，看看角色移动速度的变化</li>
+</ol>
+<img class="fig-img" style="width: 680px;" src="images/func01-step3-block.png" alt="控制器移动积木">
+<div class="img-caption">图 1-3：控制器移动积木</div>
+<p class="note-text">💡 <code>v</code> 是速度（velocity）的缩写。<code>vx</code> 表示水平方向（左右）的速度，<code>vy</code> 表示垂直方向（上下）的速度。数值越大，角色移动越快。</p>
+<p class="note-text">🧪 点击右侧模拟器，试试用键盘方向键控制精灵移动。</p>
+<p class="note-text">📢 如果按了没反应，看看模拟器按钮是不是灰色的——灰色说明键盘没有聚焦到模拟器上，点击一下模拟器画面再试。</p>
+</div>
+
+<!-- 步骤 4 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 4</span>设置背景颜色</div>
+<p class="hint">给游戏加一个好看的背景颜色。</p>
+<ol>
+<li>在左侧积木区找到 <strong>场景</strong> 指令集</li>
+<li>拖动积木 <code>场景 → 设置背景颜色为</code></li>
+<li>选择一个你喜欢的颜色</li>
+</ol>
+<img class="fig-img" style="width: 620px;" src="images/func01-step4-block.png" alt="设置背景颜色积木">
+<div class="img-caption">图 1-4：设置背景颜色积木</div>
+<p class="note-text">💡 如果觉得纯色背景太单调，可以看看背景颜色指令下面的 <strong>设置背景图片</strong> 指令，选择或绘制一张背景图片。</p>
+</div>
+
+<!-- 步骤 5 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 5</span>测试与调整</div>
+<p class="hint">运行游戏，检查效果，调整不满意的地方。</p>
+<div class="section-title" style="font-size:1.05em;margin-bottom:8px;">检查清单</div>
+<ul class="check-list">
+<li>角色出现在屏幕左上角</li>
+<li>按键能移动</li>
+<li>速度合适</li>
+<li>背景不是纯黑色</li>
+</ul>
+<div class="section-title" style="font-size:1.05em;margin:18px 0 8px;">可调整的参数</div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead>
+<tr><th>参数</th><th>作用</th><th>建议</th></tr>
+</thead>
+<tbody>
+<tr><td>移动速度 <code>vx/vy</code></td><td>控制左右/上下移动速度</td><td>数值越大移动越快，建议 80-150</td></tr>
+<tr><td>初始位置 <code>x/y</code></td><td>控制角色出现的位置</td><td>建议在屏幕范围内</td></tr>
+</tbody>
+</table>
+</div>
+<img class="fig-img" style="width: 360px;" src="images/func01-step5-run.png" alt="运行效果">
+<div class="img-caption">图 1-5：运行效果参考</div>
+</div>
+
+<!-- 步骤 6 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 6</span>分享你的游戏</div>
+<p class="hint">把你的游戏分享给老师或同学。</p>
+<ol>
+<li>点击编辑器右上角的 <strong>分享</strong> 按钮</li>
+<li>等待生成分享链接</li>
+<li>复制链接，发给老师或同学</li>
+</ol>
+<img class="fig-img fig-wide" style="width: 900px;" src="images/func01-step6-ui.png" alt="分享游戏操作">
+<div class="img-caption">图 1-6：分享游戏操作参考</div>
+</div>
+
+<!-- 易错点与提示 -->
+<div class="content-card">
+<div class="section-title">⚠️ 易错点与提示</div>
+<ul class="warn-list">
+<li><strong>角色没有显示：</strong>
+<ul>
+<li>检查 <code>创建精灵</code> 积木是不是放在 <code>当开机时</code> 积木里面</li>
+<li>检查 <code>设置位置</code> 的 x/y 是不是太大了，角色跑到屏幕外去了（屏幕最大是 160×120）</li>
+</ul>
+</li>
+<li><strong>按方向键角色不动：</strong>
+<ul>
+<li>检查键盘是不是没有聚焦到模拟器上（模拟器按钮是灰色的话，先点击模拟器画面再试）</li>
+<li>检查 <code>使用按键移动</code> 积木是否连在了 <code>创建精灵</code> 积木下面</li>
+<li>检查 <code>使用按键移动</code> 里的精灵变量名，和 <code>创建精灵</code> 里的变量名是否一致（比如都是 <code>蜗牛</code>）</li>
+</ul>
+</li>
+<li><strong>角色移动太快/太慢：</strong>
+<ul>
+<li>调整 <code>使用按键移动</code> 积木里的 <code>vx</code>/<code>vy</code> 数值，数值越大移动越快</li>
+</ul>
+</li>
+<li><strong>角色图像不满意：</strong>
+<ul>
+<li>点击精灵图像，进入精灵图像编辑器重新修改，或换个图库图像</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<!-- 扩展挑战 -->
+<div class="content-card logic-card">
+<div class="section-title">🚀 扩展挑战</div>
+<p class="hint">完成基础任务后，可以尝试：</p>
+<ul class="challenge-list">
+<li><strong>改变角色朝向：</strong>当按左键时角色面向左，按右键时面向右
+<ul>
+<li><strong>提示 1：</strong>在精灵图像编辑界面，可以用<strong>翻转图像</strong>功能，快速把面向右的图像改成面向左的图像</li>
+<li><strong>提示 2：</strong>用 <code>设置 [mySprite] 的图像为 [xx]</code> 指令，配合 <code>当按键 [左/右] 按下</code> 事件，按不同方向键时切换成对应的图像</li>
+</ul>
+</li>
+<li><strong>限制角色不能跑出屏幕：</strong>
+<ul>
+<li>使用 <code>set [mySprite] stay in screen 开</code> 指令（这个指令还是英文的，平台中文化没有完全做好）</li>
+</ul>
+</li>
+<li><strong>添加第二个精灵：</strong>再创建一个精灵，用 <code>设置位置</code> 把它放到屏幕右下角</li>
+<li><strong>自由探索：</strong>到积木区逛逛，把没见过的指令集（比如 <code>音乐</code>、<code>游戏信息</code>、<code>动画</code>）里的指令拖到代码区试试，运行看看会发生什么</li>
+</ul>
+</div>
+
+<!-- 本功能总结 -->
+<div class="content-card features-card">
+<div class="section-title">✅ 本功能总结</div>
+<ul class="feature-list">
+<li>如何创建新项目</li>
+<li>如何创建和编辑精灵</li>
+<li>如何设置精灵位置</li>
+<li>如何用控制器移动精灵</li>
+<li>如何设置背景颜色</li>
+</ul>
+</div>
+
+</div>
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>功能 03：敌人巡逻</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="img-widths.css">
+<script src="config.js"></script>
+<script src="img-tweak.js"></script>
+<style>
+/* 本页模块色 */
+:root { --page-accent: #667eea; --page-soft: #f5f7ff; }
+</style>
+</head>
+<body data-module="3">
+<div class="container">
+<a href="index.html" class="back-nav">← 返回总览</a>
+
+<!-- 页头 -->
+<div class="page-header">
+<div class="module-tag">功能 03</div>
+<h1>敌人巡逻</h1>
+<p>让敌人自己在地图里走来走去，撞墙还会掉头</p>
+</div>
+
+<!-- 本节目标 -->
+<div class="content-card features-card">
+<div class="section-title">🎯 本节目标</div>
+<ul class="feature-list">
+<li>创建敌人精灵并设置种类为 Enemy</li>
+<li>给敌人设置速度，让它自己巡逻</li>
+<li>让敌人碰到墙壁后反弹</li>
+<li>读出敌人当前的速度</li>
+<li>让敌人根据移动方向改变朝向</li>
+<li>添加多个不同速度的敌人</li>
+</ul>
+</div>
+
+<!-- 课前准备 -->
+<div class="content-card">
+<div class="section-title">✏️ 课前准备</div>
+<p class="hint">两种方式二选一：</p>
+<ul class="feature-list">
+<li><strong>方式一（推荐）：</strong>如果上一个功能的项目完成了，直接打开自己的项目（<code>功能02-地图与墙壁碰撞</code>）</li>
+<li id="method-2"><strong>方式二：</strong>如果上一个功能没完成，找老师要项目链接，打开后点击 <strong>"编辑"</strong> 或 <strong>"复制"</strong> 到自己账号里</li>
+</ul>
+</div>
+
+<!-- 步骤 1 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 1</span>创建敌人精灵</div>
+<p class="hint">在场景中创建一个敌人精灵。</p>
+<ol>
+<li>在左侧积木区找到 <strong>精灵</strong> 指令集</li>
+<li>拖动积木 <code>精灵 → 创建 → 将 [变量名] 设为精灵 [图像] 类型 [类型]</code> 到代码区</li>
+<li>点击精灵图像，进入<strong>精灵图像编辑器</strong>，绘制敌人图像</li>
+<li>给敌人起一个变量名，例如 <code>小怪1</code></li>
+<li>把精灵种类设为 <strong>Enemy</strong></li>
+<li>用 <code>场景 → Tilemap Operations → 放置 [小怪1] 在图块地图 [列] [行] 上面</code>，把敌人放到地图的某个位置</li>
+</ol>
+<p class="note-text">💡 敌人不要放在墙里面，也不要和玩家角色重叠。</p>
+</div>
+
+<!-- 步骤 2 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 2</span>设置运动速度</div>
+<p class="hint">给敌人设置速度，让它自己动起来。怎么动？由你自己决定！</p>
+<ol>
+<li>找到 <code>精灵 → 物理 → 将 [小怪1] 的速度设置为 vx 50 vy 50</code>，拖动到代码区</li>
+<li>运行游戏，按下表把 <code>vx</code>、<code>vy</code> 改成不同的数字测试，看看敌人分别怎么动，把结果记下来：</li>
+</ol>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead>
+<tr><th>测试</th><th>vx</th><th>vy</th><th>敌人怎么动？</th></tr>
+</thead>
+<tbody>
+<tr><td>第 1 次</td><td>50</td><td>0</td><td></td></tr>
+<tr><td>第 2 次</td><td>-50</td><td>0</td><td></td></tr>
+<tr><td>第 3 次</td><td>0</td><td>50</td><td></td></tr>
+<tr><td>第 4 次</td><td>0</td><td>-50</td><td></td></tr>
+<tr><td>第 5 次</td><td>100</td><td>0</td><td></td></tr>
+</tbody>
+</table>
+</div>
+<ol start="3" style="counter-reset: step-item 2;">
+<li>想好你想要的巡逻方式，设置对应的速度</li>
+</ol>
+<img class="fig-img" style="width: 680px;" src="images/func03-step2-block.png" alt="设置运动速度积木">
+<div class="img-caption">图 3-1：设置运动速度积木</div>
+<p class="note-text">💡 <code>vx</code> 是水平速度，正数向右、负数向左；<code>vy</code> 是垂直速度，正数向下、负数向上；设成 <code>0</code> 就是那个方向不动。</p>
+</div>
+
+<!-- 步骤 3 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 3</span>敌人碰墙反弹</div>
+<p class="hint">敌人走到墙壁时，自动掉头往回走。</p>
+<ol>
+<li>在 <strong>精灵</strong> 指令集里找到 <strong>特效</strong> 分类</li>
+<li>拖动积木 <code>精灵 → 特效 → set [小怪1] bounce on wall 开</code>（这个指令还是英文的，意思是"碰到墙壁就反弹"）</li>
+<li>运行游戏，观察敌人撞墙后是不是自动掉头了</li>
+</ol>
+<img class="fig-img" style="width: 640px;" src="images/func03-step3-block.png" alt="敌人碰墙反弹积木">
+<div class="img-caption">图 3-2：敌人碰墙反弹积木</div>
+<p class="note-text">💡 <code>bounce on wall</code> 翻译过来就是"碰到墙壁反弹"。打开这个开关后，敌人撞到墙壁会自动掉头，不用自己写判断，并且只需要设置一次。</p>
+</div>
+
+<!-- 步骤 4 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 4</span>让敌人说出当前速度</div>
+<p class="hint">让敌人把当前的速度说出来，看看 <code>vx</code> 是怎么变化的。</p>
+<ol>
+<li>拖动 <code>游戏 → 游戏内容 → 当游戏更新时</code> 事件到代码区</li>
+<li>在事件里放入 <code>精灵 → 特效 → [小怪1] say [ :) ]</code>，把内容改成 <code>精灵 → 物理 → [小怪1] 的 [vx]</code></li>
+<li>运行游戏，看敌人头上的数字：向右走时是多少？撞墙反弹后变成多少？</li>
+</ol>
+<img class="fig-img" style="width: 420px;" src="images/func03-step4-1-block.png" alt="当游戏更新时积木">
+<div class="img-caption">图 3-3：当游戏更新时积木</div>
+<img class="fig-img" style="width: 520px;" src="images/func03-step4-2-block.png" alt="精灵说积木">
+<div class="img-caption">图 3-4：精灵说积木</div>
+<img class="fig-img" style="width: 420px;" src="images/func03-step4-3-block.png" alt="精灵的 vx">
+<div class="img-caption">图 3-5：精灵的 vx 积木</div>
+<p class="note-text">💡 <code>[小怪1] 的 [vx]</code> 可以随时读出敌人当前的速度。撞墙反弹后 <code>vx</code> 会变成负数，数字也跟着变号。</p>
+</div>
+
+<!-- 步骤 5 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 5</span>敌人精灵的左右朝向</div>
+<p class="hint">敌人向右走时面向右，向左走时面向左。</p>
+<ol>
+<li>打开精灵图像编辑器，用<strong>翻转图像</strong>功能，把敌人的图像做成一张朝左的，保存成另一张图像</li>
+<li>回到 <code>当更新时</code> 的循环里，把上一步的 <code>精灵 say</code> 积木换成 <code>逻辑 → 条件 → 如果 [小怪1] 的 [vx] &gt; 0 那么 ... 否则 ...</code></li>
+<li><code>vx</code> 大于 <code>0</code>（向右走）：用 <code>精灵 → 图像 → 设置 [小怪1] 的图像为 [朝右的图]</code></li>
+<li><code>vx</code> 小于 <code>0</code>（向左走）：用 <code>设置 [小怪1] 的图像为 [朝左的图]</code></li>
+<li>运行游戏，观察敌人掉头时图像是不是也跟着换了</li>
+</ol>
+<img class="fig-img" style="width: 420px;" src="images/func03-step5-1-block.png" alt="如果那么积木">
+<div class="img-caption">图 3-6：如果……那么……积木</div>
+<img class="fig-img" style="width: 400px;" src="images/func03-step5-2-block.png" alt="大于比较积木">
+<div class="img-caption">图 3-7：vx 大于 0 比较积木</div>
+<img class="fig-img" style="width: 520px;" src="images/func03-step5-3-block.png" alt="设置图像积木">
+<div class="img-caption">图 3-8：设置图像积木</div>
+<p class="note-text">💡 敌人撞墙反弹后 <code>vx</code> 会变成负数，所以向左走时要用朝左的图像。</p>
+</div>
+
+<!-- 步骤 6 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 6</span>添加第二个敌人</div>
+<p class="hint">再添加一个速度不同的敌人，让场景更丰富。</p>
+<ol>
+<li>再创建一个敌人，变量名 <code>小怪2</code></li>
+<li>把 <code>小怪2</code> 放到地图的另一个位置</li>
+<li>设置一个和 <code>小怪1</code> 不同的方向和不同的速度</li>
+<li>记得设置 <code>小怪2</code> 碰到墙壁反弹</li>
+<li>让 <code>小怪2</code> 也会根据移动方向改变朝向</li>
+<li>运行游戏，观察两个敌人是不是都在巡逻</li>
+</ol>
+</div>
+
+<!-- 步骤 7 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 7</span>测试与调整</div>
+<p class="hint">运行游戏，检查整体效果，调整不满意的地方。</p>
+<div class="section-title" style="font-size:1.05em;margin-bottom:8px;">检查清单</div>
+<ul class="check-list">
+<li>敌人能自动巡逻</li>
+<li>敌人撞墙会反弹</li>
+<li>敌人掉头时朝向会改变</li>
+<li>两个敌人的速度和方向不一样</li>
+<li>敌人没有出生在墙里面</li>
+</ul>
+<img class="fig-img" style="width: 320px;" src="images/func03-step7-run.gif" alt="运行效果">
+<div class="img-caption">图 3-9：运行效果参考</div>
+<div class="section-title" style="font-size:1.05em;margin:18px 0 8px;">可调整的参数</div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead>
+<tr><th>参数</th><th>作用</th><th>建议</th></tr>
+</thead>
+<tbody>
+<tr><td>速度 <code>vx/vy</code></td><td>控制敌人巡逻的方向和快慢</td><td>想横着巡逻就把 <code>vy</code> 设为 0</td></tr>
+<tr><td>敌人位置（列、行）</td><td>控制敌人出生在哪一格图块</td><td>别放在墙里面</td></tr>
+<tr><td>敌人数量</td><td>控制场景里有多少个敌人</td><td>2-3 个就够热闹了</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- 易错点与提示 -->
+<div class="content-card">
+<div class="section-title">⚠️ 易错点与提示</div>
+<ul class="warn-list">
+<li><strong>敌人不动：</strong>
+<ul>
+<li>检查 <code>vx</code> 和 <code>vy</code> 是不是都被设成了 <code>0</code></li>
+</ul>
+</li>
+<li><strong>敌人不反弹：</strong>
+<ul>
+<li>检查 <code>bounce on wall</code> 是不是设成了"开"</li>
+</ul>
+</li>
+<li><strong>敌人朝向不对：</strong>
+<ul>
+<li>检查两张图像是不是搞反了</li>
+<li>检查判断条件：向右走（<code>vx &gt; 0</code>）用朝右的图，向左走（<code>vx &lt; 0</code>）用朝左的图</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<!-- 本功能总结 -->
+<div class="content-card features-card">
+<div class="section-title">✅ 本功能总结</div>
+<ul class="feature-list">
+<li>如何创建敌人精灵</li>
+<li>如何给敌人设置速度实现巡逻</li>
+<li>如何让敌人碰到墙壁反弹</li>
+<li>如何读出敌人当前的速度</li>
+<li>如何让敌人根据移动方向改变朝向</li>
+<li>如何添加多个敌人</li>
+</ul>
+</div>
+
+</div>
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+<script>
+// 课前准备「方式二」：根据课程进度，决定是否显示上一个功能的 demo 链接
+(function () {
+    var cfg = window.COURSE_CONFIG || { unlockedModule: 3, demoLinks: {} };
+    var n = parseInt(document.body.getAttribute('data-module'), 10) || 1;
+    var li = document.getElementById('method-2');
+    if (!li) return;
+    var link = (cfg.demoLinks || {})[n];
+    if (n <= cfg.unlockedModule && link) {
+        li.innerHTML =
+            '<strong>方式二：</strong>如果上一个功能没完成，点击 ' +
+            '<a href="' + link + '" target="_blank" rel="noopener"><strong>这里</strong></a> ' +
+            '打开老师给的项目，再点击 <strong>"编辑"</strong> 或 <strong>"复制"</strong> 到自己账号里';
+    }
+})();
+</script>
+</body>
+</html>
