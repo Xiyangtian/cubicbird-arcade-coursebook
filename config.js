@@ -13,11 +13,13 @@
 //   按功能编号填写；某个功能暂时没有链接就留空 ''，对应的页面会显示「找老师要链接」。
 
 window.COURSE_CONFIG = {
-    unlockedModule: 1,
+    unlockedModule: 2,
 
     demoLinks: {
         1: '',
         2: 'https://makecode.com/_KEqA0v4fuFvm',
-        3: 'https://makecode.com/_fJHbx5esVgkF'
+        3: 'https://makecode.com/_fJHbx5esVgkF',
+        4: 'https://makecode.com/_b7EP9P2V9FzX',
+        5: 'https://makecode.com/_gMuF9kAUeTDt'
     }
 };

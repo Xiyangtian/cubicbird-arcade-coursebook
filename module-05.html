@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>功能 05：射击与分数</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="img-widths.css">
+<script src="config.js"></script>
+<script src="img-tweak.js"></script>
+<style>
+/* 本页模块色 */
+:root { --page-accent: #72ACC8; --page-soft: #f2f9fc; }
+</style>
+</head>
+<body data-module="5">
+<div class="container">
+<a href="index.html" class="back-nav">← 返回总览</a>
+
+<!-- 页头 -->
+<div class="page-header">
+<div class="module-tag">功能 05</div>
+<h1>射击与分数</h1>
+<p>按 A 键发射子弹消灭敌人，得分到达目标就获胜</p>
+</div>
+
+<!-- 本节目标 -->
+<div class="content-card features-card">
+<div class="section-title">🎯 本节目标</div>
+<ul class="feature-list">
+<li>设置并显示分数</li>
+<li>按 A 键发射子弹（弹射物）</li>
+<li>子弹击中敌人后销毁并加分</li>
+<li>分数达到目标时游戏获胜</li>
+</ul>
+</div>
+
+<!-- 课前准备 -->
+<div class="content-card">
+<div class="section-title">✏️ 课前准备</div>
+<p class="hint">两种方式二选一：</p>
+<ul class="feature-list">
+<li><strong>方式一（推荐）：</strong>如果上一个功能的项目完成了，直接打开自己的项目（<code>功能04-受伤生命与游戏结束</code>）</li>
+<li id="method-2"><strong>方式二：</strong>如果上一个功能没完成，找老师要项目链接，打开后点击 <strong>"编辑"</strong> 或 <strong>"复制"</strong> 到自己账号里</li>
+</ul>
+</div>
+
+<!-- 步骤 1 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 1</span>设置分数</div>
+<p class="hint">在屏幕上方显示分数，从 0 开始。</p>
+<ol>
+<li>在左侧积木区找到 <strong>游戏信息</strong> 指令集</li>
+<li>拖动积木 <code>游戏信息 → 得分 → 将得分设置为 [0]</code> 到 <code>当开机时</code></li>
+<li>运行游戏，观察屏幕上方是否出现分数</li>
+</ol>
+<img class="fig-img" style="width: 680px;" src="images/func05-step1-block.png" alt="设置分数积木">
+<div class="img-caption">图 5-1：设置分数积木</div>
+<p class="note-text">💡 分数和生命一样是游戏自带的，设置后会自动显示在屏幕上方，不用自己画。</p>
+</div>
+
+<!-- 步骤 2 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 2</span>按键发射子弹</div>
+<p class="hint">按 A 键时，从玩家身上发射一颗子弹。</p>
+<ol>
+<li>在左侧积木区找到 <strong>控制器</strong> 指令集</li>
+<li>拖动积木 <code>控制器 → 当按钮 A 按下时</code> 到代码区</li>
+<li>在里面放入 <code>精灵 → 弹射物 → 将 [projectile] 设为弹射物从 [mySprite] 以 vx [50] vy [50]</code></li>
+<li>点击图像，画一颗子弹</li>
+<li>运行游戏，按 A 键，观察子弹是不是从玩家身上飞出去</li>
+</ol>
+<img class="fig-img" style="width: 680px;" src="images/func05-step2-block.png" alt="发射子弹积木">
+<div class="img-caption">图 5-2：发射子弹积木</div>
+<p class="note-text">💡 <code>Projectile</code> 是英文，中文叫<strong>弹射物</strong>（也叫抛射物），就是子弹这种从精灵身上发射出去、会自动往前飞的东西。它本质上也是一个精灵，所以图像、重叠、销毁这些积木对它都适用。积木里的 <code>vx</code>、<code>vy</code> 决定子弹飞行的方向和快慢——正负号决定方向、数字大小决定速度，可以自己改数字试试。</p>
+</div>
+
+<!-- 步骤 3 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 3</span>子弹击中敌人后销毁并加分</div>
+<p class="hint">子弹碰到敌人时，敌人消失，分数加 1。</p>
+<ol>
+<li>在左侧积木区找到 <strong>精灵</strong> 指令集</li>
+<li>拖动积木 <code>精灵 → 当 [Projectile] 与 [Enemy] 重叠时</code> 到代码区</li>
+<li>在事件里放入 <code>精灵 → 特效 → destroy</code>（这个指令还是英文的，意思是"销毁"），再把事件自带的 <code>otherSprite</code>（局部变量，代表被碰到的那个精灵）拖到 <code>destroy</code> 里</li>
+<li>再放入 <code>游戏信息 → 得分 → 改变得分 [1]</code></li>
+<li>运行游戏，射击敌人，观察敌人消失、得分增加</li>
+</ol>
+<img class="fig-img" style="width: 680px;" src="images/func05-step3-1-block.png" alt="重叠事件积木">
+<div class="img-caption">图 5-3：重叠事件积木</div>
+<img class="fig-img" style="width: 620px;" src="images/func05-step3-2-block.png" alt="销毁与加分积木">
+<div class="img-caption">图 5-4：销毁与加分积木</div>
+<p class="note-text">💡 要不要把子弹也一起销毁？由你自己决定——销毁子弹，一颗子弹只能打一个敌人；不销毁，子弹会继续飞，可能打中更多敌人。</p>
+</div>
+
+<!-- 步骤 4 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 4</span>得分达到目标后游戏获胜</div>
+<p class="hint">分数达到目标时，显示胜利画面。</p>
+<ol>
+<li>在左侧积木区找到 <strong>游戏信息</strong> 指令集</li>
+<li>拖动积木 <code>游戏信息 → 得分 → on score [N]</code> 事件到代码区（这个指令还是英文的，意思是"当得分为"）</li>
+<li>在事件里放入 <code>游戏 → game over [胜利]</code>（这个指令还是英文的，意思是"游戏结束"）</li>
+<li>想一想：<code>N</code> 填多少？地图上有几个敌人，消灭一个加 1 分，全部消灭就胜利，所以 <code>N</code> 填敌人的数量</li>
+<li>运行游戏，消灭所有敌人，观察胜利画面</li>
+</ol>
+<img class="fig-img" style="width: 680px;" src="images/func05-step4-block.png" alt="得分获胜积木">
+<div class="img-caption">图 5-5：得分获胜积木</div>
+<p class="note-text">💡 <code>on score</code> 会在分数达到指定数字时自动触发，和功能04 的 <code>当生命值为 0 时</code> 很像，不用自己写判断。</p>
+</div>
+
+<!-- 步骤 5 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 5</span>测试与调整</div>
+<p class="hint">完整测试射击、得分和获胜系统。</p>
+<div class="section-title" style="font-size:1.05em;margin-bottom:8px;">检查清单</div>
+<ul class="check-list">
+<li>按 A 键能发射子弹</li>
+<li>子弹会自己向前飞</li>
+<li>子弹击中敌人后，敌人消失、分数增加 1</li>
+<li>分数到达目标后显示胜利画面</li>
+<li>玩家碰到敌人仍然扣血</li>
+<li>生命为 0 时游戏结束</li>
+</ul>
+<img class="fig-img" style="width: 320px;" src="images/func05-step5-run.gif" alt="运行效果">
+<div class="img-caption">图 5-6：运行效果参考</div>
+<div class="section-title" style="font-size:1.05em;margin:18px 0 8px;">可调整的参数</div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead>
+<tr><th>参数</th><th>作用</th><th>建议</th></tr>
+</thead>
+<tbody>
+<tr><td>子弹速度 vx/vy</td><td>子弹飞行的方向和快慢</td><td>自己试，50-200 比较合适</td></tr>
+<tr><td>子弹图像大小</td><td>命中判定范围</td><td>8×8 或 16×16</td></tr>
+<tr><td>胜利分数</td><td>分数达到多少就获胜</td><td>等于地图上敌人的数量</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- 易错点与提示 -->
+<div class="content-card">
+<div class="section-title">⚠️ 易错点与提示</div>
+<ul class="warn-list">
+<li><strong>按 A 键没有子弹：</strong>
+<ul>
+<li>检查是否使用了 <code>当按钮 A 按下时</code> 事件</li>
+<li>检查弹射物积木是否设置好了 <code>vx</code>、<code>vy</code></li>
+</ul>
+</li>
+<li><strong>子弹不飞向敌人：</strong>
+<ul>
+<li>检查 <code>vx</code>、<code>vy</code> 的正负号，往哪边飞取决于它们的值</li>
+</ul>
+</li>
+<li><strong>子弹穿过敌人：</strong>
+<ul>
+<li>检查重叠事件的种类是否正确（Projectile 与 Enemy）</li>
+<li>检查是否调用了 <code>destroy</code></li>
+</ul>
+</li>
+<li><strong>分数不增加：</strong>
+<ul>
+<li>检查 <code>改变得分</code> 是否放在了重叠事件里</li>
+<li>检查事件是否触发（子弹有没有碰到敌人）</li>
+</ul>
+</li>
+<li><strong>分数到了但游戏不获胜：</strong>
+<ul>
+<li>检查 <code>on score</code> 里的数字是否等于敌人数量</li>
+<li>检查 <code>game over</code> 是否放进了这个事件里</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<!-- 本功能总结 -->
+<div class="content-card features-card">
+<div class="section-title">✅ 本功能总结</div>
+<ul class="feature-list">
+<li>如何设置并显示分数</li>
+<li>如何按 A 键发射子弹</li>
+<li>如何让子弹击中敌人后销毁并加分</li>
+<li>如何判断分数达标并显示胜利画面</li>
+</ul>
+</div>
+
+</div>
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+<script>
+// 课前准备「方式二」：根据课程进度，决定是否显示上一个功能的 demo 链接
+(function () {
+    var cfg = window.COURSE_CONFIG || { unlockedModule: 5, demoLinks: {} };
+    var n = parseInt(document.body.getAttribute('data-module'), 10) || 1;
+    var li = document.getElementById('method-2');
+    if (!li) return;
+    var link = (cfg.demoLinks || {})[n];
+    if (n <= cfg.unlockedModule && link) {
+        li.innerHTML =
+            '<strong>方式二：</strong>如果上一个功能没完成，点击 ' +
+            '<a href="' + link + '" target="_blank" rel="noopener"><strong>这里</strong></a> ' +
+            '打开老师给的项目，再点击 <strong>"编辑"</strong> 或 <strong>"复制"</strong> 到自己账号里';
+    }
+})();
+</script>
+</body>
+</html>

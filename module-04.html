@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>功能 04：受伤、生命与游戏结束</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="img-widths.css">
+<script src="config.js"></script>
+<script src="img-tweak.js"></script>
+<style>
+/* 本页模块色 */
+:root { --page-accent: #F3A21C; --page-soft: #fffbf0; }
+</style>
+</head>
+<body data-module="4">
+<div class="container">
+<a href="index.html" class="back-nav">← 返回总览</a>
+
+<!-- 页头 -->
+<div class="page-header">
+<div class="module-tag">功能 04</div>
+<h1>受伤、生命与游戏结束</h1>
+<p>给玩家加上生命值，受伤扣血，生命归零游戏结束</p>
+</div>
+
+<!-- 本节目标 -->
+<div class="content-card features-card">
+<div class="section-title">🎯 本节目标</div>
+<ul class="feature-list">
+<li>设置并显示生命值</li>
+<li>玩家碰到敌人后扣减生命值</li>
+<li>生命值为 0 时结束游戏</li>
+<li>用镜头抖动增强受伤反馈，用暂停避免连续扣血</li>
+</ul>
+</div>
+
+<!-- 课前准备 -->
+<div class="content-card">
+<div class="section-title">✏️ 课前准备</div>
+<p class="hint">两种方式二选一：</p>
+<ul class="feature-list">
+<li><strong>方式一（推荐）：</strong>如果上一个功能的项目完成了，直接打开自己的项目（<code>功能03-敌人巡逻</code>）</li>
+<li id="method-2"><strong>方式二：</strong>如果上一个功能没完成，找老师要项目链接，打开后点击 <strong>"编辑"</strong> 或 <strong>"复制"</strong> 到自己账号里</li>
+</ul>
+</div>
+
+<!-- 步骤 1 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 1</span>设置生命值</div>
+<p class="hint">给玩家设置初始生命值，并在屏幕上显示出来。</p>
+<ol>
+<li>在左侧积木区找到 <strong>游戏信息</strong> 指令集</li>
+<li>拖动积木 <code>游戏信息 → 生命值 → 将生命设置为 [3]</code> 到 <code>当开机时</code></li>
+<li>运行游戏，观察屏幕右上角是否出现心形图标和数字</li>
+</ol>
+<img class="fig-img" style="width: 680px;" src="images/func04-step1-block.png" alt="设置生命值积木">
+<div class="img-caption">图 4-1：设置生命值积木</div>
+<p class="note-text">💡 <code>将生命设置为</code> 是游戏自带的生命系统，设置后屏幕右上角会自动显示心形和数字，不用自己画。</p>
+</div>
+
+<!-- 步骤 2 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 2</span>碰到敌人扣血</div>
+<p class="hint">当玩家和敌人重叠时，玩家生命减少。</p>
+<ol>
+<li>在左侧积木区找到 <strong>精灵</strong> 指令集</li>
+<li>拖动积木 <code>精灵 → 重叠 → 当 [Player] 与 [Enemy] 重叠时</code> 到代码区</li>
+<li>在事件里放入 <code>游戏信息 → 生命值 → 改变生命 [-1]</code></li>
+<li>运行游戏，控制玩家撞向敌人，观察生命是否减少</li>
+</ol>
+<img class="fig-img" style="width: 680px;" src="images/func04-step2-1-block.png" alt="重叠事件积木">
+<div class="img-caption">图 4-2：重叠事件积木</div>
+<img class="fig-img" style="width: 620px;" src="images/func04-step2-2-block.png" alt="改变生命积木">
+<div class="img-caption">图 4-3：改变生命积木</div>
+<p class="note-text">🤔 想一想：撞上敌人后，生命会不会连续往下掉？为什么会这样？我们到步骤 5 再解决这个问题。</p>
+</div>
+
+<!-- 步骤 3 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 3</span>生命为 0 时游戏结束</div>
+<p class="hint">当生命值降到 0 时，显示游戏结束画面。</p>
+<ol>
+<li>在左侧积木区找到 <strong>游戏信息</strong> 指令集</li>
+<li>拖动积木 <code>游戏信息 → 生命值 → 当生命值为 0 时</code> 事件到代码区</li>
+<li>在事件里放入 <code>游戏 → game over [失败]</code>（这个指令还是英文的，意思是"游戏结束"）</li>
+<li>运行游戏，故意把生命耗光，观察游戏结束画面</li>
+</ol>
+<img class="fig-img" style="width: 680px;" src="images/func04-step3-1-block.png" alt="当生命值为零时积木">
+<div class="img-caption">图 4-4：当生命值为零时积木</div>
+<img class="fig-img" style="width: 620px;" src="images/func04-step3-2-block.png" alt="游戏结束积木">
+<div class="img-caption">图 4-5：游戏结束积木</div>
+<p class="note-text">💡 <code>当生命值为 0 时</code> 会在生命降到 0 时自动触发，不用自己写判断。<code>game over</code>（游戏结束）会停止游戏并显示胜利或失败画面。</p>
+</div>
+
+<!-- 步骤 4 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 4</span>受伤时屏幕抖动</div>
+<p class="hint">受伤时让屏幕抖动一下，让玩家明显感觉到"被打了"。</p>
+<ol>
+<li>在 <code>当 [Player] 与 [Enemy] 重叠时</code> 事件里，扣血之后放入 <code>场景 → 镜头 → 镜头抖动 [4] 像素持续 [500] 毫秒</code></li>
+<li>运行游戏，撞向敌人，观察屏幕是不是抖了一下</li>
+</ol>
+<img class="fig-img" style="width: 640px;" src="images/func04-step4-block.png" alt="受伤屏幕抖动积木">
+<div class="img-caption">图 4-6：受伤屏幕抖动积木</div>
+</div>
+
+<!-- 步骤 5 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 5</span>受伤后暂停一下</div>
+<p class="hint">扣血后暂停一小会儿，让生命不要连续往下掉。</p>
+<ol>
+<li>在 <code>当 [Player] 与 [Enemy] 重叠时</code> 事件里，扣血之后放入 <code>循环 → 暂停 [800] 毫秒</code></li>
+<li>运行游戏，撞向敌人后松开方向键停在原地，观察生命是不是不会"哗哗"往下掉了（而是 800 毫秒才扣一次）</li>
+</ol>
+<img class="fig-img" style="width: 640px;" src="images/func04-step5-block.png" alt="暂停防连续扣血积木">
+<div class="img-caption">图 4-7：暂停防连续扣血积木</div>
+<p class="note-text">💡 <code>暂停</code> 会停住当前这一小段代码，等时间到了再继续。<code>800</code> 毫秒是老师测试过的值，觉得太久或太短，可以自己改数字再试试。</p>
+</div>
+
+<!-- 步骤 6 -->
+<div class="content-card step-card">
+<div class="section-title"><span class="step-num">步骤 6</span>测试与调整</div>
+<p class="hint">反复测试，确保生命系统正常工作。</p>
+<div class="section-title" style="font-size:1.05em;margin-bottom:8px;">检查清单</div>
+<ul class="check-list">
+<li>游戏开始时生命显示为 3</li>
+<li>碰到敌人后生命减少 1</li>
+<li>生命减到 0 时游戏结束</li>
+<li>受伤时屏幕会抖动</li>
+<li>撞上敌人后生命不会连续往下掉</li>
+</ul>
+<img class="fig-img" style="width: 320px;" src="images/func04-step6-run.gif" alt="运行效果">
+<div class="img-caption">图 4-8：运行效果参考</div>
+<div class="section-title" style="font-size:1.05em;margin:18px 0 8px;">可调整的参数</div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead>
+<tr><th>参数</th><th>作用</th><th>建议</th></tr>
+</thead>
+<tbody>
+<tr><td>初始生命</td><td>玩家能承受的攻击次数</td><td>初学者建议 3</td></tr>
+<tr><td>每次扣血</td><td>每次受伤减少的生命</td><td>建议 1</td></tr>
+<tr><td>抖动幅度和时长</td><td>受伤反馈的明显程度</td><td>4 像素、500 毫秒</td></tr>
+<tr><td>暂停时长</td><td>两次扣血之间的间隔</td><td>800 毫秒，可自己微调</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- 易错点与提示 -->
+<div class="content-card">
+<div class="section-title">⚠️ 易错点与提示</div>
+<ul class="warn-list">
+<li><strong>碰到敌人生命一直掉：</strong>
+<ul>
+<li>重叠事件每帧都会触发，暂停要放在扣血<strong>之后</strong>，否则起不到间隔作用</li>
+</ul>
+</li>
+<li><strong>生命到 0 但游戏不结束：</strong>
+<ul>
+<li>检查是否使用了 <code>当生命值为 0 时</code> 事件</li>
+<li>检查 <code>game over</code> 是否放进了这个事件里</li>
+</ul>
+</li>
+<li><strong>生命没有显示：</strong>
+<ul>
+<li>检查是否使用了 <code>游戏信息 → 生命值 → 将生命设置为</code> 积木</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<!-- 本功能总结 -->
+<div class="content-card features-card">
+<div class="section-title">✅ 本功能总结</div>
+<ul class="feature-list">
+<li>如何设置并显示生命值</li>
+<li>如何在玩家碰到敌人时扣血</li>
+<li>如何判断生命值为 0 并结束游戏</li>
+<li>如何用镜头抖动增强受伤反馈，用暂停避免连续扣血</li>
+</ul>
+</div>
+
+</div>
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+<script>
+// 课前准备「方式二」：根据课程进度，决定是否显示上一个功能的 demo 链接
+(function () {
+    var cfg = window.COURSE_CONFIG || { unlockedModule: 4, demoLinks: {} };
+    var n = parseInt(document.body.getAttribute('data-module'), 10) || 1;
+    var li = document.getElementById('method-2');
+    if (!li) return;
+    var link = (cfg.demoLinks || {})[n];
+    if (n <= cfg.unlockedModule && link) {
+        li.innerHTML =
+            '<strong>方式二：</strong>如果上一个功能没完成，点击 ' +
+            '<a href="' + link + '" target="_blank" rel="noopener"><strong>这里</strong></a> ' +
+            '打开老师给的项目，再点击 <strong>"编辑"</strong> 或 <strong>"复制"</strong> 到自己账号里';
+    }
+})();
+</script>
+</body>
+</html>
